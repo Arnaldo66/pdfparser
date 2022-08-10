@@ -10,9 +10,6 @@
             "email": "arnaldo66@yahoo.fr"
         }
     ],
-    "support": {
-        "issues": "https://github.com/smalot/pdfparser/issues"
-    },
     "homepage": "https://www.pdfparser.org",
     "require": {
         "php": ">=7.1",
