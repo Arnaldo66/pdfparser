@@ -22,12 +22,12 @@
     },
     "autoload": {
         "psr-0": {
-            "Arnaldo66\\PdfParser\\": "src/"
+            "Smalot\\PdfParser\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\Arnaldo66\\PdfParser\\": "tests/"
+            "Tests\\Smalot\\PdfParser\\": "tests/"
         }
     },
     "config": {
