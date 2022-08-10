@@ -191,8 +191,8 @@ class PDFObject
         $textCleaned = $this->cleanContent($content, '_');
 
         // Extract text blocks.
-        if (preg_match_all('/(.*?)\s+BT[\s|\(|\[]+(.*?)\s*ET(?=\s|$)?/s', $textCleaned, $matches, \PREG_OFFSET_CAPTURE)) {
-            foreach ($matches[2] as $pos => $part) {
+        if (preg_match_all('/(\sQ)?\s+(.*?)BT[\s|\(|\[]+(.*?)\s*ET(\sq)?/s', $textCleaned, $matches, \PREG_OFFSET_CAPTURE)) {
+            foreach ($matches[3] as $pos => $part) {
                 $text = $part[0];
                 if ('' === $text) {
                     continue;
@@ -201,11 +201,18 @@ class PDFObject
                 $section = substr($content, $offset, \strlen($text));
 
                 // Removes BDC and EMC markup.
-                $section = trim(preg_replace('/(\/[A-Za-z0-9]+\s*<<.*?)(>>\s*BDC)(.*?)(EMC\s+)/s', '${3}', $section.' '));
+                $section = preg_replace('/(\/[A-Za-z0-9]+\s*<<.*?)(>>\s*BDC)(.*?)(EMC\s+)/s', '${3}', $section.' ');
 
-                // Add Q & q flags and Tf commands which before text block.
-                if (!empty($matches[1][$pos][0])) {
-                    $section = $this->addQAndqFlagsAndTfCommands($section, $matches, $pos);
+                // Add Tx commands which before BT.
+                // @see: https://github.com/smalot/pdfparser/issues/542
+                if (!empty($matches[2][$pos][0]) && preg_match('/\sTf\s/', $matches[2][$pos][0])) {
+                    $section = trim($matches[2][$pos][0].$section);
+                }
+
+                // Add Q and q flags if detected around BT/ET.
+                // @see: https://github.com/smalot/pdfparser/issues/387
+                if (empty($matches[2][$pos][0]) || !preg_match('/\sq\s/', $matches[2][$pos][0])) {
+                    $section = trim((!empty($matches[1][$pos][0]) ? "Q\n" : '').$section).(!empty($matches[4][$pos][0]) ? "\nq" : '');
                 }
 
                 $sections[] = $section;
