@@ -1,13 +1,13 @@
 {
-    "name": "smalot/pdfparser",
-    "description": "Pdf parser library. Can read and extract information from pdf file.",
+    "name": "arnaldo66/pdfparser",
+    "description": "Pdf parser library. Can read and extract information from pdf file. fork from smalot",
     "keywords": ["PDF", "text", "parser", "parse", "extract"],
     "type": "library",
     "license": "LGPL-3.0",
     "authors": [
         {
-            "name": "Sebastien MALOT",
-            "email": "sebastien@malot.fr"
+            "name": "Arnaldo66",
+            "email": "arnaldo66@yahoo.fr"
         }
     ],
     "support": {
@@ -22,12 +22,12 @@
     },
     "autoload": {
         "psr-0": {
-            "Smalot\\PdfParser\\": "src/"
+            "Arnaldo66\\PdfParser\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\Smalot\\PdfParser\\": "tests/"
+            "Tests\\Arnaldo66\\PdfParser\\": "tests/"
         }
     },
     "config": {
